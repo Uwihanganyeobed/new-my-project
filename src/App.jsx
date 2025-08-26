@@ -6,6 +6,13 @@ import Effect from "./components/hooks/Effect";
 import { ThemeContext } from "./components/ThemeContext";
 import Reference from "./components/hooks/Reference";
 import { BrowserRouter,Routes,Route } from "react-router-dom";
+import Welcome from "./components/book-management/Welcome";
+import Books from "./components/book-management/Books";
+import BookDetail from "./components/book-management/BookDetail";
+import AddBook from "./components/book-management/AddBook";
+import Register from "./components/book-management/Register";
+import Login from "./components/book-management/Login";
+import NotFound from "./components/NotFound";
 
 export default function App() {
   const [theme, setTheme] = useState("light");

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Welcome() {
   return (
-    <div className='h-screen flex flex-col'>
+    <div className='h-screen flex flex-row w-full'>
         <div className='flex flex-col items-center 
         justify-center text-center bg-gray-100'>
             <h2 className='text-5xl font-extrabold text-gray-800'>
@@ -15,16 +15,17 @@ export default function Welcome() {
              bg-blue-600 text-white hover:bg-blue-500 shadow-sm'>
                 Get Started
              </a>
-             <div className='hiddwen md:flex flex-1 items-center 
+             
+
+            </div>  
+            <div className='w-full md:flex flex-1 items-center 
              justify-center
              '>
                 <img src="https://i.imgur.com/hrEBm93.jpeg"
                  alt="Welcome"
                 className='rounded-lg shodow-lg max-h-[70%]'
                 />
-             </div>
-
-            </div>        
+             </div>      
     </div>
   )
 }
