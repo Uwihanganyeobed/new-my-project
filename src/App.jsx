@@ -25,7 +25,7 @@ export default function App() {
       <div
         className={`flex ${
           theme === "light" ? "bg-green-400" : "bg-gray-400"
-        } w-full flex-col items-center`}
+        } w-full flex-col justify-center items-center`}
       >
         <BrowserRouter>
         <Navbar />
