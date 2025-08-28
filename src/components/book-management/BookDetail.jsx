@@ -14,29 +14,29 @@ export default function BookDetail() {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {id} = useParams();
+  const { id } = useParams();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     API.get(`/books/${id}`)
-     .then((res) => {
+      .then((res) => {
         setFormData({
           title: res.data.title || "",
           author: res.data.author || "",
           publishedDate: res.data.publishedDate || "",
           genre: res.data.genre || "",
-          price: res.data.price || ""
-        }); 
+          price: res.data.price || "",
+        });
         setLoading(false);
       })
-      .catch((err)=>{
-        console.log(err)
-        setLoading(false)
-      })
-  },[id])
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,17 +106,13 @@ export default function BookDetail() {
         />
 
         <button
-        type="submit"
-        disabled={loading}
-        className="w-full flex justify-center items-center
+          type="submit"
+          disabled={loading}
+          className="w-full flex justify-center items-center
          bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
         >
-          {loading ? (
-            <Loader2 className="animate-spin mr-2" size={20} /> 
-          ): null
-        }
-        {loading ? 'Creating...': 'Create a Book'}
-
+          {loading ? <Loader2 className="animate-spin mr-2" size={20} /> : null}
+          {loading ? "Updating..." : "Update a Book"}
         </button>
       </form>
     </div>
