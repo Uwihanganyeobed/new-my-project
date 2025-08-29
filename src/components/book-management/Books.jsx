@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import API from "../../api";
 import { ArrowBigRight, ArrowRight, Loader2, Trash2 } from "lucide-react";
 import ReusableButton from "../button";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Books() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     API.get("/books")
@@ -19,17 +21,16 @@ export default function Books() {
       });
   }, []);
 
-  const handleDelete=async(id)=>{
-    if(!window.confirm("Are you sure you want to delete this book")
-    ) return
-      try {
-        await API.delete(`/books/${id}`)
-        setBooks(books.filter((book)=>book._id !== id))
-        console.log("Book deleted succesfully")
-      } catch (error) {
-        console.log(error)
-      }
-  }
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this book")) return;
+    try {
+      await API.delete(`/books/${id}`);
+      setBooks(books.filter((book) => book._id !== id));
+      console.log("Book deleted succesfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (loading) {
     return (
@@ -40,11 +41,13 @@ export default function Books() {
   }
   return (
     <div className="flex items-center flex-col justify-center">
-      <ReusableButton
-        link={"/add-book"}
-        label={"Create a Book"}
-        icon={<ArrowRight />}
-      />
+      {isAuthenticated && (
+        <ReusableButton
+          link={"/add-book"}
+          label={"Create a Book"}
+          icon={<ArrowRight />}
+        />
+      )}
 
       <table
         className="min-w-full border border-gray-300 
@@ -58,8 +61,12 @@ export default function Books() {
             <th>Publication Date</th>
             <th>Book Genre</th>
             <th>Price</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            {isAuthenticated && (
+              <>
+                <th>Edit</th>
+                <th>Delete</th>
+              </>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -73,24 +80,27 @@ export default function Books() {
               </td>
               <td className="p-2 border">{book.genre}</td>
               <td className="p-2 border">{book.price}</td>
-              <td>
-                <ReusableButton
-                link={`/books/${book._id}`}
-                label={'Edit'}
-                icon={<ArrowBigRight />}
-                />
-              </td>
-              <td>
-                <button
-                onClick={()=>handleDelete(book._id)}
-                className="flex items-center gap-2 my-3
+              {isAuthenticated && (
+                <>
+                  <td>
+                    <ReusableButton
+                      link={`/books/${book._id}`}
+                      label={"Edit"}
+                      icon={<ArrowBigRight />}
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(book._id)}
+                      className="flex items-center gap-2 my-3
          bg-red-600 hover:bg-red-700
           text-white font-medium shadow-md px-5 py-3 rounded-md transition"
-
-                >
-                  <Trash2 size={18} />
-                </button>
-              </td>
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>

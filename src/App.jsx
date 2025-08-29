@@ -14,6 +14,7 @@ import Login from "./components/book-management/Login";
 import NotFound from "./components/NotFound";
 import { AuthProvider } from "./components/context/AuthContext.jsx";
 import { ThemeContext } from "./components/context/ThemeContext";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 export default function App() {
   const [theme, setTheme] = useState("light");
@@ -35,7 +36,15 @@ export default function App() {
               <Route path="/" element={<Welcome />} />
               <Route path="/books" element={<Books />} />
               <Route path="/books/:id" element={<BookDetail />} />
-              <Route path="/add-book" element={<AddBook />} />
+
+              <Route
+                path="/add-book"
+                element={
+                  <ProtectedRoute>
+                    <AddBook />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<NotFound />} />
